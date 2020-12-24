@@ -29,16 +29,18 @@ function setup() {
   scene.addImage( sceneImg);
   scene.scale=3.10
   
-  scene.x= sceneImg.width/8;
+  //scene.x= sceneImg.width/8;
   scene.velocityX=-4;
 
-  monkey = createSprite(displayWidth/2-200,displayHeight-50,20,20);
+  monkey = createSprite(80,displayHeight-20);
   monkey.addAnimation("moving", monkey_running);
   monkey.scale=0.1;
+  monkey.velocityX = 3;
   
-  ground = createSprite(displayWidth/2-200,displayHeight-30,displayWidth*3,10);
-  ground.velocityX=-4;
-  ground.x=ground.width/2;
+  ground = createSprite(displayWidth/2,displayHeight-10,displayWidth,20);
+  ground.velocityX=3;
+  //ground.x=ground.width/2;
+  ground.visible = false;
  
   
 }
@@ -57,9 +59,9 @@ function draw() {
     monkey.velocityY = monkey.velocityY + 0.8;    
 
     monkey.collide(ground);  
-  if (ground.x<0 ){
-      ground.x = ground.width/2;
-      }
+  //if (ground.x<0 ){
+   //   ground.x = ground.width/2;
+    //  }
   
   
   obstaclesGroup = new Group();
@@ -82,26 +84,26 @@ function draw() {
 }
 
 function banana(){
-  if (displayWidth % 80 === 0){
-    var banana = createSprite(displayWidth/2+200,displayHeight/2+900,78,56);
+  if (camera.position.x%100===0){
+    var banana = createSprite(camera.position.x+displayWidth/2,displayHeight/2);
     banana.addImage(bananaImage);
     banana.scale=0.1;
-    banana.velocityX = -3;
-    banana.y = Math.round(random(displayHeight/2+80,displayHeight/2+300));
+    //banana.velocityX = -3;
+    banana.y = Math.round(random(camera.position.x+displayWidth/2+100,displayHeight-60));
     banana.depth = monkey.depth;
     monkey.depth = monkey.depth + 1;
     FoodGroup.add(banana);
-    banana.lifetime = 1000;
+    banana.lifetime = displayWidth;
   }
 }
 
 function obstacle(){
-  if (displayWidth % 80 === 0){
+  if (camera.position.x%200===0){
     var obstacle = createSprite(displayWidth/2+800,displayHeight-70,78,56);
     obstacle.addImage( obstacleImage);
     obstacle.scale=0.2;
-    obstacle.velocityX=-2;  
+//    obstacle.velocityX=-2;  
     obstaclesGroup.add(obstacle);
-    obstacle.lifetime = 1000;
+    obstacle.lifetime = displayWidth;
   }
 }
